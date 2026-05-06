@@ -101,5 +101,5 @@ This work was supported by the ADM Innovation Fund, Genome British Columbia, the
 
 Questions, bug reports, and dataset-quality issues are welcome via GitHub Issues. For research collaboration enquiries, contact:
 
-- Benjamin Blake — `benjamincblake@uvic.ca`
+- Benjamin Blake — `benjaminblake64@gmail.com`
 - Declan McIntosh — `declanmcintosh@gmail.com`
