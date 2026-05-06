@@ -20,34 +20,6 @@ If you use NEEDL-Bench in your work, please cite the paper (BibTeX below).
 - **Two complementary evaluation protocols**: a Random split that approximates the natural distribution of features, and a Maximum-Diversity split that maximizes coverage of rare structures via farthest-point sampling in a ResNet50 feature space.
 - **Realistic challenges**: blur, low contrast, occlusion, freeze-thaw artefacts, foreign objects, and visually similar non-target diseases.
 
----
-
-## Dataset structure
-
-```
-NEEDL-Bench/
-├── images/
-│   ├── benchtop/
-│   │   └── *.png                # 256x256 tiles, 360 px/mm
-│   └── handheld/
-│       └── *.png
-├── annotations/
-│   ├── keypoints/
-│   │   ├── train.json           # COCO-keypoints format
-│   │   ├── val.json
-│   │   └── test.json
-│   └── bboxes/
-│       ├── train.json           # COCO-detection format
-│       ├── val.json
-│       └── test.json
-├── splits/
-│   ├── benchtop_random.csv
-│   ├── benchtop_diversity.csv
-│   └── handheld_random.csv
-├── raw/                          # (optional) original full-resolution captures
-└── LICENSE
-```
-
 ### Classes
 
 | ID  | Name          | Description                                                  |
@@ -80,54 +52,16 @@ The Maximum-Diversity test/val sets are constructed only from the larger benchto
 ### Download
 
 Available on:
-- **Hugging Face Datasets:** `<TODO: insert HF link>`
-- **Zenodo (DOI):** `<TODO: insert DOI>`
-- Direct mirror: `<TODO: insert mirror link>`
+- **Hugging Face Datasets:** `https://huggingface.co/datasets/benjamincblake/Needl-Bench`
 
 ```bash
 # Clone this repo (code + small annotation files only)
 git clone https://github.com/<your-org>/NEEDL-Bench.git
 cd NEEDL-Bench
 
-# Download images (large)
-bash scripts/download.sh         # ~<TODO size> GB
+
 ```
 
-### Quick load (Python)
-
-```python
-from pathlib import Path
-import json
-from PIL import Image
-
-root = Path("NEEDL-Bench")
-split = json.load(open(root / "annotations/keypoints/test.json"))
-
-img_id_to_file = {im["id"]: im["file_name"] for im in split["images"]}
-for ann in split["annotations"][:5]:
-    img = Image.open(root / "images" / img_id_to_file[ann["image_id"]])
-    print(ann["category_id"], ann["keypoints"], img.size)
-```
-
-### Reproduce the paper's baselines
-
-```bash
-pip install -r requirements.txt
-
-# YOLOv11-Detect / YOLOv11-Pose
-python scripts/train_yolo.py    --task detect --split benchtop_random
-python scripts/train_yolo.py    --task pose   --split benchtop_random
-
-# RF-DETR
-python scripts/train_rfdetr.py  --split handheld_random
-
-# FCN-ResNet50 (custom keypoint head)
-python scripts/train_fcn.py     --split handheld_random
-```
-
-Pretrained checkpoints for each baseline are available in the **Releases** tab.
-
----
 
 ## Acquisition details (summary)
 
@@ -149,7 +83,7 @@ The dataset is released under **CC BY 4.0** for non-commercial and academic rese
 ```bibtex
 @inproceedings{blake2026needlbench,
   title     = {NEEDL-Bench: Dataset for Swiss Needle Cast and Stomata Detection in Microscopy Images},
-  author    = {Blake, Benjamin and McIntosh, Declan and Ehlting, J{\"u}rgen and Feau, Nicolas and Tanney, Joey B. and Branzan Albu, Alexandra},
+  author    = {Blake, Benjamin and McIntosh, Declan and Ehlting, Jürgen and Feau, Nicolas and Tanney, Joey B. and Branzan Albu, Alexandra},
   booktitle = {Conference on Robots and Vision (CRV)},
   year      = {2026}
 }
@@ -168,4 +102,4 @@ This work was supported by the ADM Innovation Fund, Genome British Columbia, the
 Questions, bug reports, and dataset-quality issues are welcome via GitHub Issues. For research collaboration enquiries, contact:
 
 - Benjamin Blake — `benjamincblake@uvic.ca`
-- Alexandra Branzan Albu — `aalbu@uvic.ca`
+- Declan McIntosh — `declanmcintosh@gmail.com`
